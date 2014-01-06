@@ -1,3 +1,6 @@
+var projectileImage = new Image();
+projectileImage.src = "projectile.png";
+
 function catmullRomInterpolate( P0, P1, P2, P3, u ){
 	var u3 = u * u * u;
 	var u2 = u * u;
@@ -26,7 +29,10 @@ var Drawable = function(){
 }
 Drawable.prototype = {
     Draw: function(){
-        console.log(this.x, this.y);
+        //Game.ctx.fillRect(this.x, this.y, 10, 10);
+        if(this.x == null || this.x == 'NaN' || this.y == null || this.y == 'NaN'){
+            console.log("Trying to draw something invalid");
+        }
         this.rotation += this.rot_inc;
         if(this.rotation != 0){
             Game.ctx.save();   
@@ -43,7 +49,7 @@ Drawable.prototype = {
 var Projectile = function(argX, argY){
     this.x = argX;
     this.y = argY;
-    this.image.src = "projectile.png";
+    this.image = projectileImage;
     this.rot_inc =  Math.random() * 5 + 10;
 }
 Projectile.prototype = new Drawable();
@@ -117,13 +123,11 @@ var Game = {
     },
 
     Draw: 	function(){
-        //console.log(timeIt(function(){
-            Game.ctx.clearRect(0, 0, 800, 600);
-            for(var i = 0; i < Game.projectiles.length; i++){
-                Game.projectiles[i].Draw();
-            }
-            Game.player.Draw();
-        //}));
+        Game.ctx.clearRect(0, 0, 800, 600);
+        for(var i = 0; i < Game.projectiles.length; i++){
+            Game.projectiles[i].Draw();
+        }
+        Game.player.Draw();
     },
 
     Physics: 	function(){
