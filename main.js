@@ -116,6 +116,13 @@ var Game = {
             Game.mouse.x =  evt.clientX - rect.left;
             Game.mouse.y =  evt.clientY - rect.top;
         }, false);
+
+        //Touch event here
+        Game.canvas_tag.addEventListener('touchmove', function(evt) {
+            var rect = Game.canvas_tag.getBoundingClientRect();
+            Game.mouse.x =  evt.clientX - rect.left;
+            Game.mouse.y =  evt.clientY - rect.top;
+        }, false);
     
     	// initialize game loops
     	Game.physics_loop_handle = setInterval(Game.Physics, Game.physics_timer);
