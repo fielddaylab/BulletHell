@@ -54,9 +54,11 @@ Drawable.prototype = {
     }
 };
 
-var Projectile = function(argX, argY){
+var Projectile = function(argX, argY, argXVel, argYVel){
     this.x = argX;
     this.y = argY;
+    this.x_vel = argXVel;
+    this.y_vel = argYVel;
     this.image = projectileImage;
     this.rot_inc =  Math.random() * 5 + 10;
 }
@@ -64,7 +66,8 @@ Projectile.prototype = new Drawable();
 Projectile.prototype.constructor = Projectile;
 Projectile.prototype.Physics = function(){
     // projectile physics function
-    this.y -= 10;
+    this.y -= this.y_vel;
+    this.x += this.x_vel;
     if(this.y < -20) return false;
     return true;
 }
@@ -73,6 +76,11 @@ var EnemyShip = function(argX, argY){
     this.x = argX;
     this.y = argY;
     this.image = enemy1Image;
+    // we should define its motion with a
+    // start pos
+    // end pos
+    // speed
+    // manner of traversing the line
 }
 
 var PlayerShip = function(argX, argY){
@@ -164,7 +172,7 @@ var Game = {
                 i--;
             }
         }
-        Game.projectiles.push(new Projectile(Game.mouse.x-12, Game.mouse.y-12));
+        Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -20));
         Game.player.Physics();
         
     },
