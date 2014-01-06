@@ -1,8 +1,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
-	var socket = io.connect('http://localhost:3000');
+	var socket = io.connect('http://72.33.115.99:3000');
 	var mouseX = 0, mouseY = 0;
+	var ratioX = 0, ratioY = 0;
 
 	// on connection to server, ask for user's name with an anonymous callback
 	
@@ -13,7 +14,7 @@
 
 	// on load of page
 	$(function(){
-		
+
 		$("html").bind('mousemove.trackrEvent', function (e) {
 			// on mouse move, save updated event x and y position to these two variables. We check the variables every (sampleRate) milliseconds
 			mouseX = e.pageX;
@@ -21,9 +22,10 @@
 	    });
 
 	    var mouse_pos_broadcast = setInterval(function(){
-	    	socket.emit('mousepos', {x: mouseX/$("html").width(), y:mouseY/$("html").height()});
-	    	//console.log("Soup bro");
-	    	console.log('mousepos', {x: mouseX/$("html").width(), y:mouseY/$("html").height()});
+	    	ratioX = mouseX/$("html").width();
+	    	ratioY = mouseY/$("html").height();
+	    	socket.emit('mousepos', {x: ratioX, y: ratioY});
+	    	$('html').css('background-color', 'rgb(' + Math.floor(ratioX * 255) + ', ' + Math.floor(ratioY * 255) + ', 0)');
 	    }, 16);
 
 	});

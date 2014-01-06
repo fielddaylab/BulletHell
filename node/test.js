@@ -19,6 +19,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('mousepos', function(mouse_coords){
     pos = mouse_coords;
+    console.log(mouse_coords.x, mouse_coords.y);
   });
 
   // when the user disconnects.. perform this
