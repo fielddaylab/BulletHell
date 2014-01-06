@@ -1,45 +1,23 @@
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script>
-	var socket = io.connect('72.33.115.99:3000');
-	var mouseX = 0, mouseY = 0;
-	var ratioX = 0, ratioY = 0;
-
-	// on connection to server, ask for user's name with an anonymous callback
-	
-	// listener, whenever the server emits 'updateusers', this updates the username list
-	socket.on('echo', function(data) {
-		console.log(data);
-	});
-
-	// on load of page
-	$(function(){
-
-		$("html").bind('mousemove', function (e) {
-			// on mouse move, save updated event x and y position to these two variables. We check the variables every (sampleRate) milliseconds
-			mouseX = e.pageX;
-			mouseY = e.pageY;
-	    });
-
-	    $("html, div").bind('touchmove', function(evt) {
-            evt.preventDefault(); //Prevent scrolling, zooming etc for mobile
-            var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-            mouseX =  touch.pageX;
-            mouseY =  touch.pageY;
-        });
-
-	    var mouse_pos_broadcast = setInterval(function(){
-	    	ratioX = mouseX/$("html").width();
-	    	ratioY = mouseY/$("html").height();
-	    	socket.emit('mousepos', {x: ratioX, y: ratioY});
-	    	$('html').css('background-color', 'rgb(' + Math.floor(ratioX * 255) + ', ' + Math.floor(ratioY * 255) + ', 0)');
-	    }, 16);
-
-	});
-
-</script>
+<!DOCTYPE html>
 <html>
-<div>
-	You are free to touch the screen.
-</div>
+	<head>
+		<link rel="stylesheet" href="style.css" />
+		<title>BulletHell</title>
+	</head>
+
+	<body>
+		<canvas id="draw_canvas" oncontextmenu="return false;" width="800" height="600" tabindex="1" draggable="false" class="unselectable" >
+		</canvas>
+		<canvas id="projectile" oncontextmenu="return false;" style="display:none;" >
+		</canvas>
+	</body>
+
+	</footer>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="/static/setup.js" 	async></script>
+		<script src="/static/main.js" 	async></script>
+	</footer>
+
 </html>
+

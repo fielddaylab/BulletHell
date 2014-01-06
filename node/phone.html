@@ -1,0 +1,44 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script>
+    var socket = io.connect('72.33.115.99:3000');
+    var mouseX = 0, mouseY = 0;
+    var ratioX = 0, ratioY = 0;
+    var lastRatioX = 0, lastRatioY = 0;
+    var $html = $("html");
+
+
+    // on load of page
+    $(function(){
+
+        $html.bind('mousemove', function (e) {
+            // on mouse move, save updated event x and y position to these two variables. We check the variables every (sampleRate) milliseconds
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+        });
+
+        $html.bind('touchmove', function(evt) {
+            evt.preventDefault(); //Prevent scrolling, zooming etc for mobile
+            var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+            mouseX =  touch.pageX;
+            mouseY =  touch.pageY;
+        });
+
+        var mouse_pos_broadcast = setInterval(function(){
+            lastRatioX = ratioX;
+            lastRatioY = ratioY;
+            ratioX = mouseX / $html.width();
+            ratioY = mouseY / $html.height();
+            if(lastRatioX != ratioX || lastRatioY != ratioY){
+                socket.emit('mousepos', {x: ratioX, y: ratioY});
+            }
+        }, 15);
+
+    });
+
+</script>
+<html>
+<div>
+    You are free to touch the screen.
+</div>
+</html>

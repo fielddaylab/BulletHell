@@ -7,9 +7,15 @@ var app = express()
 
 server.listen(3000);
 
+app.use("/static", express.static(__dirname + '/static'));
+
 // routing
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
+});
+
+app.get('/phone.html', function (req, res) {
+  res.sendfile(__dirname + '/phone.html');
 });
 
 // usernames which are currently connected to the chat
@@ -19,7 +25,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('mousepos', function(mouse_coords){
     pos = mouse_coords;
-    console.log(mouse_coords.x, mouse_coords.y);
+   socket.broadcast.emit('mouse_broadcast', pos);
   });
 
   // when the user disconnects.. perform this
