@@ -119,9 +119,10 @@ var Game = {
 
         //Touch event here
         Game.canvas_tag.addEventListener('touchmove', function(evt) {
-            var rect = Game.canvas_tag.getBoundingClientRect();
-            Game.mouse.x =  evt.clientX - rect.left;
-            Game.mouse.y =  evt.clientY - rect.top;
+            evt.preventDefault(); //Prevent scrolling, zooming etc for mobile
+            //var rect = Game.canvas_tag.getBoundingClientRect();
+            Game.mouse.x =  evt.targetTouches[0].pageX;
+            Game.mouse.y =  evt.targetTouches[0].pageY;
         }, false);
     
     	// initialize game loops
