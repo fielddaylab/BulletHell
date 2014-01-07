@@ -7,7 +7,7 @@ enemy1Image.src = "static/enemy_ship_1.gif"
 var playerImage = new Image();
 playerImage.src = "static/player_ship.png";
 
-var socket = io.connect('72.33.115.99:3000');
+var socket = io.connect('72.33.115.223:3000');
 
 function catmullRomInterpolate( P0, P1, P2, P3, u ){
     var u3 = u * u * u;
@@ -22,24 +22,35 @@ function catmullRomInterpolate( P0, P1, P2, P3, u ){
     return new Point(x, y);
 }
 
+function Point(argX, argY){
+    this.x = argX;
+    this.y = argY;
+}
+
 function timeIt(callback){
     var time = performance.now();
     callback();
     return performance.now() - time;
 }
 
+function distance(obj1, obj2){
+    var x_diff = (obj1.x + obj1.image.width/2) - (obj2.x + obj2.image.width/2);
+    var y_diff = (obj1.y + obj1.image.height/2) - (obj2.y + obj2.image.height/2);
+    return Math.sqrt(Math.pow(x_diff, 2) + Math.pow(y_diff, 2));
+}
+
 var Drawable = function(){
     this.image = new Image();
-    this.x = null;
-    this.y = null;
+    this.x = 0;
+    this.y = 0;
     this.rotation = 0;
     this.rot_inc = 0;
 }
 Drawable.prototype = {
     Draw: function(){
         //Game.ctx.fillRect(this.x, this.y, 10, 10);
-        if(this.x == null || this.x == 'NaN' || this.y == null || this.y == 'NaN'){
-            console.log("Trying to draw something invalid");
+        if(this.x === null || this.x === 'NaN' || this.y === null || this.y === 'NaN'){
+            console.log("Trying to draw something invalid", this);
         }
         this.rotation += this.rot_inc;
         if(this.rotation != 0){
@@ -66,22 +77,59 @@ Projectile.prototype = new Drawable();
 Projectile.prototype.constructor = Projectile;
 Projectile.prototype.Physics = function(){
     // projectile physics function
-    this.y -= this.y_vel;
+    this.y += this.y_vel;
     this.x += this.x_vel;
     if(this.y < -20) return false;
     return true;
 }
 
-var EnemyShip = function(argX, argY){
-    this.x = argX;
-    this.y = argY;
+var EnemyShip = function(){
     this.image = enemy1Image;
-    // we should define its motion with a
-    // start pos
-    // end pos
-    // speed
-    // manner of traversing the line
-}
+    this.behavior = new EnemyBehavior(-50, 300, 850, 0, function(){}, 0, 1, 1500);
+};
+EnemyShip.prototype = new Drawable();
+EnemyShip.prototype.constructor = EnemyShip;
+EnemyShip.prototype.Physics = function(){
+    var newPoint = this.behavior.Position();
+    if(newPoint !== false){
+        this.x = newPoint.x;
+        this.y = newPoint.y;
+    } else {
+        return false;
+    }
+
+    for(var i = 0; i < Game.projectiles.length; i++){
+        var dist = distance(this, Game.projectiles[i]);
+        if( dist < 10 ){
+            return false;
+        }
+    }
+
+    return true;
+};
+
+var EnemyBehavior = function(startX, startY, endX, endY, pathFunc, startVal, endVal, argDuration){
+    this.start = new Point(startX, startY);
+    this.end = new Point(endX, endY);
+    this.duration = argDuration;
+    this.path = {
+        func: pathFunc,
+        start_val: startVal,
+        end_val: endVal
+    };
+    this.time_started = performance.now();
+};
+EnemyBehavior.prototype.Position = function(){
+    var deltaTime = (performance.now() - this.time_started) / this.duration;
+    if(deltaTime > 1){
+        return false; // indicate we need to remove ourself from the array of enemies
+    }
+    var deltaX = (this.end.x - this.start.x) * deltaTime;
+    var deltaY = (this.end.y - this.start.y) * deltaTime;
+    var newX = this.start.x + deltaX;
+    var newY = this.start.y + deltaY;
+    return new Point(newX, newY);
+};
 
 var PlayerShip = function(argX, argY){
     this.x = argX;
@@ -93,7 +141,7 @@ PlayerShip.prototype.constructor = PlayerShip;
 PlayerShip.prototype.Physics = function(){
     this.x = Game.mouse.x;
     this.y = Game.mouse.y;
-}
+};
 
 var Node = function(dataVal, prevVal, nextVal){
     this.next = nextVal;
@@ -122,12 +170,13 @@ var Game = {
     physics_loop_handle:    null,
     player:                 new PlayerShip(500, 400),
     projectiles:            [],
+    enemies:                [],
     num_projectiles:        1000,
     width:                  1000,
     height:                 800,
     mouse:{
-            x:              null,
-            y:              null
+            x:              0,
+            y:              0
     },
 
     // public functions
@@ -153,6 +202,22 @@ var Game = {
         });
 
         // initialize game loops
+
+        // TEMP ENEMY ADDING INTERVAL
+        setInterval(function(){
+            Game.enemies.push(new EnemyShip());
+        }, 250);
+
+        setInterval(function(){
+           console.log("GAME STATISTICS/////////////////////////");
+           console.log("Projectiles: " + Game.projectiles.length);
+           console.log("Enemies: " + Game.enemies.length);
+        }, 100);
+
+        setInterval(function(){
+            Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -15));
+        }, 25);
+
         Game.physics_loop_handle = setInterval(Game.Physics, Game.physics_timer);
         Game.draw_loop_handle = setInterval(Game.Draw, Game.draw_timer);
     },
@@ -161,6 +226,9 @@ var Game = {
         Game.ctx.clearRect(0, 0, 800, 600);
         for(var i = 0; i < Game.projectiles.length; i++){
             Game.projectiles[i].Draw();
+        }
+        for(var i = 0; i < Game.enemies.length; i++){
+            Game.enemies[i].Draw();
         }
         Game.player.Draw();
     },
@@ -172,7 +240,12 @@ var Game = {
                 i--;
             }
         }
-        Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -20));
+        for(var i = 0; i < Game.enemies.length; i++){
+            if( ! Game.enemies[i].Physics() ){
+                Game.enemies.splice(i, 1);
+                i--;
+            }
+        }
         Game.player.Physics();
         
     },

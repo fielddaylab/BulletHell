@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
-    var socket = io.connect('72.33.115.99:3000');
+    var socket = io.connect('72.33.115.223:3000');
     var mouseX = 0, mouseY = 0;
     var ratioX = 0, ratioY = 0;
     var lastRatioX = 0, lastRatioY = 0;
@@ -32,7 +32,7 @@
             if(lastRatioX != ratioX || lastRatioY != ratioY){
                 socket.emit('mousepos', {x: ratioX, y: ratioY});
             }
-        }, 15);
+        }, 2);
 
     });
 

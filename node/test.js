@@ -3,7 +3,7 @@ var express = require('express');
 var app = express()
   , http = require('http')
   , server = http.createServer(app)
-  , io = require('socket.io').listen(server, { log: false });
+  , io = require('socket.io').listen(server, { log: true });
 
 server.listen(3000);
 
