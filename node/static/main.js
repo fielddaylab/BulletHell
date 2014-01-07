@@ -85,7 +85,7 @@ Projectile.prototype.Physics = function(){
 
 var EnemyShip = function(){
     this.image = enemy1Image;
-    this.behavior = new EnemyBehavior(-50, 300, 850, 0, function(){}, 0, 1, 1500);
+    this.behavior = new EnemyBehavior(-50, 300, 850, 0, function(){}, 0, 1, 2500);
 };
 EnemyShip.prototype = new Drawable();
 EnemyShip.prototype.constructor = EnemyShip;
@@ -100,7 +100,9 @@ EnemyShip.prototype.Physics = function(){
 
     for(var i = 0; i < Game.projectiles.length; i++){
         var dist = distance(this, Game.projectiles[i]);
-        if( dist < 10 ){
+        if( dist < 15 ){
+            Game.projectiles.splice(i, 1);
+            Game.kills++;
             return false;
         }
     }
@@ -168,15 +170,16 @@ var Game = {
     draw_timer:             15,
     draw_loop_handle:       null,
     physics_loop_handle:    null,
-    player:                 new PlayerShip(500, 400),
+    player:                 null,
     projectiles:            [],
+    enemy_projectiles:      [],
     enemies:                [],
-    num_projectiles:        1000,
-    width:                  1000,
-    height:                 800,
+    width:                  0,
+    height:                 0,
+    kills:                  0,
     mouse:{
-            x:              0,
-            y:              0
+            x:              null,
+            y:              null
     },
 
     // public functions
@@ -196,9 +199,17 @@ var Game = {
         //     Game.mouse.y =  evt.targetTouches[0].pageY;
         // }, false);
 
+        this.width = Game.canvas_tag.width;
+        this.height = Game.canvas_tag.height;
+        
+        this.mouse.x = Math.round(this.width / 2);
+        this.mouse.y = Math.round(this.height / 2);
+
+        this.player = new PlayerShip(this.mouse.x, this.mouse.y);
+
         socket.on('mouse_broadcast', function(mouse_coords){
-            Game.mouse.x = mouse_coords.x * 800;
-            Game.mouse.y = mouse_coords.y * 600;
+            Game.mouse.x = mouse_coords.x * Game.width;
+            Game.mouse.y = mouse_coords.y * Game.height;
         });
 
         // initialize game loops
@@ -212,18 +223,19 @@ var Game = {
            console.log("GAME STATISTICS/////////////////////////");
            console.log("Projectiles: " + Game.projectiles.length);
            console.log("Enemies: " + Game.enemies.length);
+           console.log("Kills: " + Game.kills);
         }, 100);
 
         setInterval(function(){
-            Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -15));
-        }, 25);
+            Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -5));
+        }, 50);
 
         Game.physics_loop_handle = setInterval(Game.Physics, Game.physics_timer);
         Game.draw_loop_handle = setInterval(Game.Draw, Game.draw_timer);
     },
 
     Draw:   function(){
-        Game.ctx.clearRect(0, 0, 800, 600);
+        Game.ctx.clearRect(0, 0, Game.width, Game.height);
         for(var i = 0; i < Game.projectiles.length; i++){
             Game.projectiles[i].Draw();
         }
