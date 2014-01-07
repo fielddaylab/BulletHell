@@ -7,7 +7,7 @@ enemy1Image.src = "static/enemy_ship_1.gif"
 var playerImage = new Image();
 playerImage.src = "static/player_ship.png";
 
-var socket = io.connect('72.33.115.99:3000');
+var socket = io.connect('72.33.164.245:3000');
 
 function catmullRomInterpolate( P0, P1, P2, P3, u ){
     var u3 = u * u * u;
