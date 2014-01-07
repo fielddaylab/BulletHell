@@ -88,6 +88,7 @@ Projectile.prototype.Physics = function(){
 var EnemyShip = function(){
     this.image = enemy1Image;
     this.behavior = null;
+    this.last_shot_time = 0;
 };
 EnemyShip.prototype = new Drawable();
 EnemyShip.prototype.constructor = EnemyShip;
@@ -114,6 +115,7 @@ EnemyShip.prototype.Physics = function(){
 
     if( this.behavior.shoot_function() ){
         this.Shoot();
+        this.last_shot_time = performance.now();
     }
 
     return true;
@@ -188,7 +190,9 @@ var Game = {
     kills:                  0,
     mouse:{
             x:              null,
-            y:              null
+            y:              null,
+            last_x:         0,
+            last_y:         0
     },
 
     // public functions
@@ -234,7 +238,9 @@ var Game = {
                 850, 
                 0, 
                 function(){
-                    if(self.x > 50){
+                    if(    this.self.x  > 375 
+                        && this.self.x < 425
+                        && performance.now() - this.self.last_shot_time > 45){
                         return true
                     } else {
                         return false
@@ -255,7 +261,9 @@ var Game = {
                 -50, 
                 0, 
                 function(){
-                    if(self.x > 50){
+                    if(    this.self.x  > 375 
+                        && this.self.x < 425
+                        && performance.now() - this.self.last_shot_time > 45){
                         return true
                     } else {
                         return false
