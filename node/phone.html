@@ -25,6 +25,12 @@
         $html.append("<div id='finger4'>Finger 4</div>");
         $html.append("<div id='finger5'>Finger 5</div>");
 
+        var $finger1 = $("#finger1");
+        var $finger2 = $("#finger2");
+        var $finger3 = $("#finger3");
+        var $finger4 = $("#finger4");
+        var $finger5 = $("#finger5");
+
         $html.bind('mousemove', function (e) {
             // on mouse move, save updated event x and y position to these two variables. We check the variables every (sampleRate) milliseconds
             mouseX = e.pageX;
@@ -36,33 +42,33 @@
         $html.bind('touchmove', function(evt) {
             evt.preventDefault(); //Prevent scrolling, zooming etc for mobile
             var touch1 = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-            // var touch2 = evt.originalEvent.touches[1] || evt.originalEvent.changedTouches[1] || -1;
-            // var touch3 = evt.originalEvent.touches[2] || evt.originalEvent.changedTouches[2] || -1;
-            // var touch4 = evt.originalEvent.touches[3] || evt.originalEvent.changedTouches[3] || -1;
-            // var touch5 = evt.originalEvent.touches[4] || evt.originalEvent.changedTouches[4] || -1;
+            var touch2 = evt.originalEvent.touches[1] || evt.originalEvent.changedTouches[1] || -1;
+            var touch3 = evt.originalEvent.touches[2] || evt.originalEvent.changedTouches[2] || -1;
+            var touch4 = evt.originalEvent.touches[3] || evt.originalEvent.changedTouches[3] || -1;
+            var touch5 = evt.originalEvent.touches[4] || evt.originalEvent.changedTouches[4] || -1;
 
 
              mouseX = touch1.pageX;
              mouseY = touch1.pageY;
 
-            // mouseX2 =  touch2.pageX;
-            // mouseY2 =  touch2.pageY;
+            mouseX2 =  touch2.pageX;
+            mouseY2 =  touch2.pageY;
 
-            // mouseX3 =  touch3.pageX;
-            // mouseY3 =  touch3.pageY;
+            mouseX3 =  touch3.pageX;
+            mouseY3 =  touch3.pageY;
 
-            // mouseX4 =  touch4.pageX;
-            // mouseY4 =  touch4.pageY;
+            mouseX4 =  touch4.pageX;
+            mouseY4 =  touch4.pageY;
 
-            // mouseX5 =  touch5.pageX;
-            // mouseY5 =  touch5.pageY;
+            mouseX5 =  touch5.pageX;
+            mouseY5 =  touch5.pageY;
 
 
-            // $("#finger1").css({position: 'absolute', left: touch.pageX, top: touch.pageY});
-            // $("#finger2").css({position: 'absolute', left: touch2.pageX, top: touch2.pageY});
-            // $("#finger3").css({position: 'absolute', left: touch3.pageX, top: touch3.pageY});
-            // $("#finger4").css({position: 'absolute', left: touch4.pageX, top: touch4.pageY});
-            // $("#finger5").css({position: 'absolute', left: touch5.pageX, top: touch5.pageY});
+            $finger1.css({position: 'absolute', left: touch.pageX, top: touch.pageY});
+            $finger2.css({position: 'absolute', left: touch2.pageX, top: touch2.pageY});
+            $finger3.css({position: 'absolute', left: touch3.pageX, top: touch3.pageY});
+            $finger4.css({position: 'absolute', left: touch4.pageX, top: touch4.pageY});
+            $finger5.css({position: 'absolute', left: touch5.pageX, top: touch5.pageY});
 
         });
 
