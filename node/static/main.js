@@ -79,16 +79,21 @@ Projectile.prototype.Physics = function(){
     // projectile physics function
     this.y += this.y_vel;
     this.x += this.x_vel;
-    if(this.y < -20) return false;
+    if(this.y < -100 || this.y > Game.height + 100 || this.x < -100 || this.x > Game.width + 100){
+        return false;
+    }
     return true;
 }
 
 var EnemyShip = function(){
     this.image = enemy1Image;
-    this.behavior = new EnemyBehavior(-50, 300, 850, 0, function(){}, 0, 1, 2500);
+    this.behavior = null;
 };
 EnemyShip.prototype = new Drawable();
 EnemyShip.prototype.constructor = EnemyShip;
+EnemyShip.prototype.Shoot = function(){
+    Game.enemy_projectiles.push(new Projectile(this.x-this.image.width/2, this.y-12-this.image.height/2, 0, 3));
+};
 EnemyShip.prototype.Physics = function(){
     var newPoint = this.behavior.Position();
     if(newPoint !== false){
@@ -107,21 +112,25 @@ EnemyShip.prototype.Physics = function(){
         }
     }
 
+    if( this.behavior.shoot_function() ){
+        this.Shoot();
+    }
+
     return true;
 };
 
-var EnemyBehavior = function(startX, startY, endX, endY, pathFunc, startVal, endVal, argDuration){
+var EnemyBehavior = function(enemyRef, startX, startY, endX, endY, shootFunc, startVal, endVal, argDuration){
+    this.self = enemyRef;
     this.start = new Point(startX, startY);
     this.end = new Point(endX, endY);
     this.duration = argDuration;
-    this.path = {
-        func: pathFunc,
-        start_val: startVal,
-        end_val: endVal
-    };
-    this.time_started = performance.now();
+    this.shoot_function = shootFunc;
+    this.time_started = null;
 };
 EnemyBehavior.prototype.Position = function(){
+    if(this.time_started === null){
+        this.time_started = performance.now();
+    }
     var deltaTime = (performance.now() - this.time_started) / this.duration;
     if(deltaTime > 1){
         return false; // indicate we need to remove ourself from the array of enemies
@@ -215,16 +224,58 @@ var Game = {
         // initialize game loops
 
         // TEMP ENEMY ADDING INTERVAL
+
         setInterval(function(){
-            Game.enemies.push(new EnemyShip());
+            var newEnemy = new EnemyShip();
+            var behavior = new EnemyBehavior(
+                newEnemy, 
+                -50, 
+                200 + Math.sin(performance.now()/400) * 100, 
+                850, 
+                0, 
+                function(){
+                    if(self.x > 50){
+                        return true
+                    } else {
+                        return false
+                    };
+                }, 
+                0, 
+                1, 
+                2500
+            );
+            newEnemy.behavior = behavior;
+            Game.enemies.push( newEnemy );
+            
+            newEnemy = new EnemyShip();
+            behavior = new EnemyBehavior(
+                newEnemy, 
+                850, 
+                200 + Math.sin(performance.now()/400) * 100, 
+                -50, 
+                0, 
+                function(){
+                    if(self.x > 50){
+                        return true
+                    } else {
+                        return false
+                    };
+                }, 
+                0, 
+                1, 
+                2500
+            );
+            newEnemy.behavior = behavior;
+            Game.enemies.push( newEnemy );
         }, 250);
 
         setInterval(function(){
            console.log("GAME STATISTICS/////////////////////////");
            console.log("Projectiles: " + Game.projectiles.length);
+           console.log("Enemy Projs: " + Game.enemy_projectiles.length);
            console.log("Enemies: " + Game.enemies.length);
            console.log("Kills: " + Game.kills);
-        }, 100);
+        }, 1000);
 
         setInterval(function(){
             Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -5));
@@ -239,6 +290,9 @@ var Game = {
         for(var i = 0; i < Game.projectiles.length; i++){
             Game.projectiles[i].Draw();
         }
+        for(var i = 0; i < Game.enemy_projectiles.length; i++){
+            Game.enemy_projectiles[i].Draw();
+        }
         for(var i = 0; i < Game.enemies.length; i++){
             Game.enemies[i].Draw();
         }
@@ -249,6 +303,12 @@ var Game = {
         for(var i = 0; i < Game.projectiles.length; i++){
             if( ! Game.projectiles[i].Physics() ){
                 Game.projectiles.splice(i, 1);
+                i--;
+            }
+        }
+        for(var i = 0; i < Game.enemy_projectiles.length; i++){
+            if( ! Game.enemy_projectiles[i].Physics() ){
+                Game.enemy_projectiles.splice(i, 1);
                 i--;
             }
         }
