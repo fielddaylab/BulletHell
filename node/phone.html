@@ -30,6 +30,11 @@
         var $finger3 = $("#finger3");
         var $finger4 = $("#finger4");
         var $finger5 = $("#finger5");
+        var $score = $('#score');
+
+        socket.on('score_broadcast', function(new_score){
+            $score.text(new_score);
+        });
 
         $html.bind('mousemove', function (e) {
             // on mouse move, save updated event x and y position to these two variables. We check the variables every (sampleRate) milliseconds
@@ -87,6 +92,6 @@
 </script>
 <html>
 <div>
-    You are free to touch the screen.
+    <div id="score" style="font-size: 200px;">You are free to touch the screen.</score>
 </div>
 </html>

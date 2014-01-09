@@ -34,8 +34,8 @@ function timeIt(callback){
 }
 
 function distance(obj1, obj2){
-    var x_diff = (obj1.x + obj1.image.width/2) - (obj2.x + obj2.image.width/2);
-    var y_diff = (obj1.y + obj1.image.height/2) - (obj2.y + obj2.image.height/2);
+    var x_diff = (obj1.x - obj1.image.width/2) - (obj2.x - obj2.image.width/2);
+    var y_diff = (obj1.y - obj1.image.height/2) - (obj2.y - obj2.image.height/2);
     return Math.sqrt(Math.pow(x_diff, 2) + Math.pow(y_diff, 2));
 }
 
@@ -148,13 +148,58 @@ var PlayerShip = function(argX, argY){
     this.x = argX;
     this.y = argY;
     this.image = playerImage;
+    this.health = 100;
 }
 PlayerShip.prototype = new Drawable();
 PlayerShip.prototype.constructor = PlayerShip;
 PlayerShip.prototype.Physics = function(){
     this.x = Game.mouse.x;
     this.y = Game.mouse.y;
+
+    for(var i = 0; i < Game.enemy_projectiles.length; i++){
+        var dist = distance(this, Game.enemy_projectiles[i]);
+        if( dist < 10 ){
+            Game.enemy_projectiles.splice(i, 1);
+            this.ChangeHealth(-10);
+        }
+    }
 };
+PlayerShip.prototype.ChangeHealth = function(argChange){
+    this.health += argChange;
+    if(this.health <= 0){
+        this.health = 0;
+        return false;
+    } 
+    if(this.health > 100) this.health = 100;
+    return true;
+};
+
+var HealthBar = function(argX, argY, argW, argH){
+    this.x = argX;
+    this.y = argY;
+    this.width = argW;
+    this.height = argH;
+}
+HealthBar.prototype.Draw = function(){
+    var color;
+    if(Game.player.health > 66){
+        color = "#00FF00";
+    } else if(Game.player.health > 33) {
+        color = "#FF9900";
+    } else {
+        color = "#FF0000";
+    }
+    Game.ctx.fillStyle = color;
+    var height = this.height * Game.player.health/100;
+    console.log(height);
+    Game.ctx.fillRect(this.x, this.y + this.height * (100 - Game.player.health)/100, this.width, height);
+
+    Game.ctx.strokeStyle = "#000000";
+    Game.ctx.lineWidth = 1;
+    Game.ctx.strokeRect(this.x, this.y, this.width, this.height);
+}
+HealthBar.prototype.Physics = function(){
+}
 
 var Node = function(dataVal, prevVal, nextVal){
     this.next = nextVal;
@@ -182,6 +227,7 @@ var Game = {
     draw_loop_handle:       null,
     physics_loop_handle:    null,
     player:                 null,
+    health:                 null,
     projectiles:            [],
     enemy_projectiles:      [],
     enemies:                [],
@@ -212,22 +258,29 @@ var Game = {
         //     Game.mouse.y =  evt.targetTouches[0].pageY;
         // }, false);
 
-        this.width = Game.canvas_tag.width;
-        this.height = Game.canvas_tag.height;
+        Game.width = Game.canvas_tag.width;
+        Game.height = Game.canvas_tag.height;
         
-        this.mouse.x = Math.round(this.width / 2);
-        this.mouse.y = Math.round(this.height / 2);
+        Game.mouse.x = Math.round(Game.width / 2);
+        Game.mouse.y = Math.round(Game.height / 2);
 
-        this.player = new PlayerShip(this.mouse.x, this.mouse.y);
+        Game.player = new PlayerShip(this.mouse.x, this.mouse.y);
+        Game.health = new HealthBar(25, 25, 10, 550);
 
         socket.on('mouse_broadcast', function(mouse_coords){
-            Game.mouse.x = mouse_coords.x * Game.width;
-            Game.mouse.y = mouse_coords.y * Game.height;
+            if(Game.player.health !== 0){
+                Game.mouse.x = mouse_coords.x * Game.width;
+                Game.mouse.y = mouse_coords.y * Game.height;
+            }
         });
 
         // initialize game loops
 
         // TEMP ENEMY ADDING INTERVAL
+
+        setInterval(function(){
+            socket.emit('score', Game.kills);
+        }, 1000);
 
         setInterval(function(){
             var newEnemy = new EnemyShip();
@@ -238,9 +291,8 @@ var Game = {
                 850, 
                 0, 
                 function(){
-                    if(    this.self.x  > 375 
-                        && this.self.x < 425
-                        && performance.now() - this.self.last_shot_time > 45){
+                    if(performance.now() - this.self.last_shot_time > Math.random() * 100000
+                       || (Math.abs(this.self.x - Game.player.x) < 15 && Math.random() > 0.975)){
                         return true
                     } else {
                         return false
@@ -261,9 +313,8 @@ var Game = {
                 -50, 
                 0, 
                 function(){
-                    if(    this.self.x  > 375 
-                        && this.self.x < 425
-                        && performance.now() - this.self.last_shot_time > 45){
+                    if(performance.now() - this.self.last_shot_time > Math.random() * 100000
+                        || (Math.abs(this.self.x - Game.player.x) < 15 && Math.random() > 0.975)){
                         return true
                     } else {
                         return false
@@ -286,7 +337,9 @@ var Game = {
         }, 1000);
 
         setInterval(function(){
-            Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -5));
+            if(Game.player.health !== 0){
+                Game.projectiles.push(new Projectile(Game.mouse.x-projectileImage.width/2, Game.mouse.y-12-projectileImage.height/2, 0, -5));
+            }
         }, 50);
 
         Game.physics_loop_handle = setInterval(Game.Physics, Game.physics_timer);
@@ -305,6 +358,11 @@ var Game = {
             Game.enemies[i].Draw();
         }
         Game.player.Draw();
+        Game.health.Draw();
+        if(Game.player.health === 0){
+            Game.ctx.font="40px Georgia";
+            Game.ctx.fillText("You've ceased to exist  :(",200, 300);
+        }
     },
 
     Physics:    function(){
@@ -327,26 +385,8 @@ var Game = {
             }
         }
         Game.player.Physics();
+        Game.health.Physics();
         
-    },
-
-    PrintPoints: function(){
-        var curr = Game.points.head;
-        Game.ctx.clearRect(0, 0, 800, 600);
-        Game.ctx.fillStyle = "rgba(255,255,255,0.05)";
-        Game.ctx.fillRect(0,0,1000,800);
-        Game.ctx.beginPath();
-
-        for(var pos = 0; pos < Game.points.point_array.length-1 && Game.points.point_array.length > 1; pos++){
-            var curr = Game.points.point_array[pos];
-            var next = Game.points.point_array[pos+1];
-
-            Game.ctx.strokeStyle = "#000000";
-            Game.ctx.moveTo(curr.x * 1000, curr.y * 100 + 400);
-            Game.ctx.lineTo(next.x * 1000, next.y * 100 + 400);
-        }
-
-        Game.ctx.stroke();
     }
 
 };

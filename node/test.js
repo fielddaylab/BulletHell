@@ -29,6 +29,10 @@ io.sockets.on('connection', function (socket) {
       console.log("mousepos broadcast");
   });
 
+  socket.on('score', function(new_score){
+   socket.broadcast.emit('score_broadcast', new_score);
+  });
+
   // when the user disconnects.. perform this
   socket.on('disconnect', function(){
    pos = {x: 0, y: 0};
