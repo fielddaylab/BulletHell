@@ -3,6 +3,8 @@ BulletHell
 
 A hell. Made of boolets.
 
+"Bullet Hell" games are a sub-genre of "Shoot 'Em Up" games (http://en.wikipedia.org/wiki/Shoot_'em_up), particularly in which you fly around trying to avoid bullets while simultaneously trying to kill baddies. In this game, you control the spaceship using a mobile phone, while viewing the game on a desktop/laptop browser. Any questions can be directed to either of us (mutschlechne  *OR*   melutzke , both of which are @ wisc dot EDU ). Thanks, and enjoy! This was made at a 16-hour, two-day Hackathon at UW MLI.
+
 
 To install/use:
 
