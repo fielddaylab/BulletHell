@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4121f84d-3854-4d34-bd1b-291b7fe91891" name="Default" comment="Added touchmove event, doesn't seem to work quite yet.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node/static/main.js" afterPath="$PROJECT_DIR$/node/static/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node/phone.html" afterPath="$PROJECT_DIR$/node/phone.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node/test.js" afterPath="$PROJECT_DIR$/node/test.js" />
+    <list default="true" id="4121f84d-3854-4d34-bd1b-291b7fe91891" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BulletHell.iws" />
@@ -31,7 +28,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="55" selection-start="622" selection-end="622" vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="435">
+            <state line="9" column="17" selection-start="269" selection-end="269" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="435">
               <folding />
             </state>
           </provider>
@@ -40,7 +37,7 @@
       <file leaf-file-name="phone.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/node/phone.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="17" selection-start="567" selection-end="567" vertical-scroll-proportion="-0.48387095" vertical-offset="510" max-vertical-offset="1365">
+            <state line="54" column="39" selection-start="2175" selection-end="2175" vertical-scroll-proportion="0.3548387" vertical-offset="645" max-vertical-offset="1455">
               <folding />
             </state>
           </provider>
@@ -49,7 +46,7 @@
       <file leaf-file-name="main.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node/static/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="34" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="3180">
+            <state line="28" column="0" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="5475">
               <folding />
             </state>
           </provider>
@@ -58,7 +55,7 @@
       <file leaf-file-name="test.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="54" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
+            <state line="20" column="54" selection-start="503" selection-end="503" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
               <folding />
             </state>
           </provider>
@@ -79,9 +76,9 @@
       <list>
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/node/index.html" />
-        <option value="$PROJECT_DIR$/node/static/main.js" />
         <option value="$PROJECT_DIR$/node/test.js" />
         <option value="$PROJECT_DIR$/node/phone.html" />
+        <option value="$PROJECT_DIR$/node/static/main.js" />
       </list>
     </option>
   </component>
@@ -179,6 +176,120 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="recentsLimit" value="5" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Development/sustainability" />
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/node/phone.html</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/node/static/main.js</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
   </component>
   <component name="RunManager" selected="Node.js.test.js">
     <configuration default="false" name="test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="/usr/local/bin/node" path-to-js-file="test.js" working-dir="$PROJECT_DIR$/node">
@@ -260,12 +371,20 @@
       <created>1389040342609</created>
       <updated>1389040342609</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added partial multitouch support, doesn't do anything yet except for display where the fingers are located.">
+      <created>1389119171642</created>
+      <updated>1389119171642</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed an efficiency issue with multitouch/jQuery.">
+      <created>1389126587577</created>
+      <updated>1389126587577</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="24" width="1400" height="860" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -276,8 +395,8 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32996207" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996207" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996207" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32996207" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -300,7 +419,9 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Added touchmove event, doesn't seem to work quite yet." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added touchmove event, doesn't seem to work quite yet." />
+    <MESSAGE value="Added partial multitouch support, doesn't do anything yet except for display where the fingers are located." />
+    <MESSAGE value="Fixed an efficiency issue with multitouch/jQuery." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed an efficiency issue with multitouch/jQuery." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -357,30 +478,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node/index.html">
+    <entry file="file://$PROJECT_DIR$/node/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="55" selection-start="622" selection-end="622" vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="435">
+        <state line="20" column="54" selection-start="503" selection-end="503" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node/test.js">
+    <entry file="file://$PROJECT_DIR$/node/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="54" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
+        <state line="9" column="17" selection-start="269" selection-end="269" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="435">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node/static/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="34" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="3180">
+        <state line="28" column="0" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="5475">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node/phone.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="17" selection-start="567" selection-end="567" vertical-scroll-proportion="-0.48387095" vertical-offset="510" max-vertical-offset="1365">
+        <state line="54" column="39" selection-start="2175" selection-end="2175" vertical-scroll-proportion="0.3548387" vertical-offset="645" max-vertical-offset="1455">
           <folding />
         </state>
       </provider>
